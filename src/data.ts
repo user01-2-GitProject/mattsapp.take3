@@ -342,6 +342,198 @@ export const INITIAL_CARDS: CardAsset[] = [
       workhorsePrice: 580,
       workhorse30dChange: 0.03
     }
+  },
+  {
+    id: "c6",
+    player: "Patrick Mahomes",
+    year: 2020,
+    set: "Donruss Optic",
+    variation: "Downtown Case Hit #DT-1",
+    serialNumber: "Unnumbered",
+    numberedTo: 500,
+    sport: "NFL",
+    gradeCompany: "PSA",
+    grade: "10",
+    subgrades: null,
+    isBlackLabel: false,
+    basePrice: 1850,
+    cagr: 0.16,
+    tYears: 0.4,
+    hz: 1.5,
+    sz: 1.2,
+    popCount: 142,
+    macroM: 1.05,
+    acquisitionCost: 1400,
+    comps: [
+      {
+        date: "2026-08-02",
+        venue: "eBay Sold",
+        rawPrice: 1920,
+        acceptedPrice: 1920,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.03,
+        outlier: false,
+        note: "Preseason prime settlement"
+      },
+      {
+        date: "2026-06-15",
+        venue: "PWCC",
+        rawPrice: 2150,
+        acceptedPrice: 1800,
+        bestOffer: true,
+        unpaid: false,
+        shillScore: 0.05,
+        outlier: false,
+        note: "Accepted offer clearing"
+      },
+      {
+        date: "2026-04-10",
+        venue: "Goldin Auctions",
+        rawPrice: 1780,
+        acceptedPrice: 1780,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.02,
+        outlier: false,
+        note: "Certified hammer price"
+      }
+    ],
+    hedonicTraits: {
+      autograph: "None",
+      patchQuality: "Opti-Chrome Insert",
+      workhorsePair: "2017 Donruss Optic Base Rated Rookie PSA 10",
+      workhorsePrice: 950,
+      workhorse30dChange: 0.08
+    }
+  },
+  {
+    id: "c7",
+    player: "Michael Jordan",
+    year: 1986,
+    set: "Fleer",
+    variation: "Rookie Card #57",
+    serialNumber: "Unnumbered",
+    numberedTo: 50000,
+    sport: "NBA",
+    gradeCompany: "PSA",
+    grade: "8",
+    subgrades: null,
+    isBlackLabel: false,
+    basePrice: 6500,
+    cagr: 0.11,
+    tYears: 2.0,
+    hz: 1.4,
+    sz: 1.1,
+    popCount: 8850,
+    macroM: 1.0,
+    acquisitionCost: 5900,
+    comps: [
+      {
+        date: "2026-07-20",
+        venue: "Heritage Auctions",
+        rawPrice: 6850,
+        acceptedPrice: 6850,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.01,
+        outlier: false,
+        note: "Summer marquee catalog auction"
+      },
+      {
+        date: "2026-05-11",
+        venue: "Goldin Auctions",
+        rawPrice: 6400,
+        acceptedPrice: 6400,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.02,
+        outlier: false,
+        note: "Verified escrow payment"
+      },
+      {
+        date: "2026-03-02",
+        venue: "PWCC Premier",
+        rawPrice: 6600,
+        acceptedPrice: 6600,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.03,
+        outlier: false,
+        note: "Private vault transfer"
+      }
+    ],
+    hedonicTraits: {
+      autograph: "None",
+      patchQuality: "Vintage Red/White/Blue Border",
+      workhorsePair: "1986 Fleer Sticker Jordan PSA 8",
+      workhorsePrice: 1200,
+      workhorse30dChange: 0.02
+    }
+  },
+  {
+    id: "c8",
+    player: "Elly De La Cruz",
+    year: 2023,
+    set: "Bowman Chrome",
+    variation: "1st Bowman Chrome Auto /499",
+    serialNumber: "Refractor /499",
+    numberedTo: 499,
+    sport: "MLB",
+    gradeCompany: "PSA",
+    grade: "10",
+    subgrades: null,
+    isBlackLabel: false,
+    basePrice: 1450,
+    cagr: 0.20,
+    tYears: 0.5,
+    hz: 1.6,
+    sz: 1.15,
+    popCount: 96,
+    macroM: 1.05,
+    acquisitionCost: 1100,
+    comps: [
+      {
+        date: "2026-08-01",
+        venue: "eBay Sold",
+        rawPrice: 1520,
+        acceptedPrice: 1520,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.04,
+        outlier: false,
+        note: "Post-All Star Game surge"
+      },
+      {
+        date: "2026-06-25",
+        venue: "130point",
+        rawPrice: 1650,
+        acceptedPrice: 1400,
+        bestOffer: true,
+        unpaid: false,
+        shillScore: 0.06,
+        outlier: false,
+        note: "Accepted offer clearance"
+      },
+      {
+        date: "2026-04-18",
+        venue: "Goldin",
+        rawPrice: 1380,
+        acceptedPrice: 1380,
+        bestOffer: false,
+        unpaid: false,
+        shillScore: 0.03,
+        outlier: false,
+        note: "Spring seasonal floor"
+      }
+    ],
+    hedonicTraits: {
+      autograph: "On-Card",
+      patchQuality: "Chrome 1st Bowman",
+      workhorsePair: "2024 Topps Series 1 RC PSA 10",
+      workhorsePrice: 85,
+      workhorse30dChange: 0.12
+    }
   }
 ];
 

@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "VaultCard": {
+      "title": "VaultCard",
+      "description": "Graded sports card asset saved to an authenticated user's private cloud vault.",
+      "type": "object",
+      "properties": {
+        "player": {
+          "type": "string",
+          "description": "Athlete or card subject name",
+          "maxLength": 100
+        },
+        "year": {
+          "type": "number",
+          "description": "Card release year"
+        },
+        "set": {
+          "type": "string",
+          "description": "Manufacturer and product set name",
+          "maxLength": 120
+        },
+        "cardNumber": {
+          "type": "string",
+          "description": "Card number within checklist",
+          "maxLength": 40
+        },
+        "parallel": {
+          "type": "string",
+          "description": "Parallel variation or colorway",
+          "maxLength": 60
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "Print run serial stamp or unnumbered identifier",
+          "maxLength": 40
+        },
+        "attributes": {
+          "type": "string",
+          "description": "Card qualifiers, RC badges, or autograph labels",
+          "maxLength": 100
+        },
+        "gradeCompany": {
+          "type": "string",
+          "description": "Authentication and grading company (PSA, BGS, SGC, CGC, RAW)",
+          "maxLength": 20
+        },
+        "gradeCondition": {
+          "type": "string",
+          "description": "Condition descriptor (GEM MT, MINT, NM-MT, etc.)",
+          "maxLength": 40
+        },
+        "grade": {
+          "type": "string",
+          "description": "Numerical grade score",
+          "maxLength": 10
+        },
+        "certNumber": {
+          "type": "string",
+          "description": "Slab certification identification number",
+          "maxLength": 50
+        },
+        "isWatchlist": {
+          "type": "boolean",
+          "description": "Watchlist bookmark status flag"
+        },
+        "notes": {
+          "type": "string",
+          "description": "User notes or provenance audit",
+          "maxLength": 1000
+        },
+        "sourceUrl": {
+          "type": "string",
+          "description": "Transaction reference link",
+          "maxLength": 500
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the owner",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO-8601 format"
+        }
+      },
+      "required": ["player", "year", "set"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/vault/{cardId}": {
+      "schema": "VaultCard",
+      "description": "Private card collection vault for an authenticated user."
+    }
+  }
+}
