@@ -1,0 +1,6 @@
+{
+  "name": "mattsapp — Sports Card Econometric Valuation Platform",
+  "description": "Econometric sports card valuation platform implementing the Integrated Value Score (Vs), shill sanitizer, zero-comp hedonic pricing, and condition arbitrage.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

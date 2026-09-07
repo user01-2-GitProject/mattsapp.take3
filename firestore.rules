@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User vault security rules: Each authenticated user can only access their own cards
+    match /users/{userId}/vault/{cardId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
