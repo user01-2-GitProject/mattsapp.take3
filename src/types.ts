@@ -1,24 +1,31 @@
 export type SportType = "NFL" | "NBA" | "MLB" | "Soccer";
-export type GradeCompanyType = "PSA" | "BGS" | "SGC" | "CGC" | "Raw";
+export type GradeCompanyType = "PSA" | "BGS" | "SGC" | "CGC" | "RAW" | "Raw";
 
 export interface MarketplaceComp {
-  date: string;
-  venue: string;                // eBay, Goldin, PWCC, Heritage
-  rawPrice: number;             // Listed or hammer price
-  acceptedPrice: number;        // True market clearing price (unmasked Best Offer)
-  bestOffer: boolean;           // Strikethrough concealment flag
-  unpaid: boolean;              // Bidder non-compliance default
-  shillScore: number;           // Probability metric (0.0 to 1.0)
-  outlier: boolean;             // >30% variance outside trend line
-  note: string;
+  id?: string;
+  price?: number;
+  date?: string;
+  venue?: string;
+  grade?: string;
+  gradeCompany?: string;
+  isShillWarning?: boolean;
+  isLotSale?: boolean;
+  isDamaged?: boolean;
+  rawPrice?: number;
+  acceptedPrice?: number;
+  bestOffer?: boolean;
+  unpaid?: boolean;
+  shillScore?: number;
+  outlier?: boolean;
+  note?: string;
 }
 
 export interface HedonicTraits {
   autograph: "None" | "Sticker" | "On-Card";
   patchQuality: string;
-  workhorsePair: string;      // Highly liquid paired asset (e.g. Base Prizm PSA 10)
+  workhorsePair: string;
   workhorsePrice: number;
-  workhorse30dChange: number; // 30-day percentage momentum
+  workhorse30dChange: number;
 }
 
 export interface CardAsset {
@@ -27,34 +34,156 @@ export interface CardAsset {
   year: number;
   set: string;
   variation: string;
-  serialNumber: string;         // e.g. "3/5", "Unnumbered"
-  numberedTo: number;           // Denominator for scarcity elasticity
+  serialNumber: string;
+  numberedTo: number;
   sport: SportType;
   gradeCompany: GradeCompanyType;
-  grade: string;                // "10", "9.5", "9", etc.
+  grade: string;
   subgrades?: { centering: number; corners: number; edges: number; surface: number } | null;
-  isBlackLabel: boolean;        // BGS Quad-10 Black Label Flag
-  basePrice: number;            // P_h (Historical clean transaction price)
-  cagr: number;                 // Historical compound annual growth rate
-  tYears: number;               // Forward time horizon in years
-  hz: number;                   // Standardized Hype Index z-score (-2.0 to +3.0)
-  sz: number;                   // Standardized Sentiment Index z-score (-2.0 to +3.0)
-  popCount: number;             // Total graded population count for f(Pop)
-  macroM: number;               // Macroeconomic climate multiplier (0.85 - 1.15)
+  isBlackLabel: boolean;
+  basePrice: number;
+  cagr: number;
+  tYears: number;
+  hz: number;
+  sz: number;
+  popCount: number;
+  macroM: number;
   acquisitionCost: number;
   comps: MarketplaceComp[];
   hedonicTraits: HedonicTraits;
 }
 
 export interface ValuationResult {
-  Vs: number;                   // Integrated Value Score
-  lowerBound: number;           // -15% to -25% uncertainty bound
-  upperBound: number;           // +15% to +25% uncertainty bound
-  growthFactor: number;         // (1 + r_excess)^t
-  compIndex: number;            // C_i time-decay weighted multiple
-  psychFactor: number;          // (1 + 0.15*H_z - 0.10*S_z)
-  scarcityFactor: number;       // f(Pop) = (1000 / Pop)^0.16
-  macroM: number;               // M
+  Vs: number;
+  lowerBound: number;
+  upperBound: number;
+  growthFactor: number;
+  compIndex: number;
+  psychFactor: number;
+  scarcityFactor: number;
+  macroM: number;
   validCompCount: number;
   rawCompCount: number;
+}
+
+export interface CardMeta {
+  player: string;
+  year: number;
+  set: string;
+  cardNumber: string;
+  parallel: string;
+  serialNumber: string;
+  attributes: string;
+  grade: string;
+  gradeCondition: string;
+  gradeCompany: string;
+  certNumber?: string;
+  verifiedAttributes?: string[];
+  missingAttributes?: string[];
+}
+
+export interface PricePoints {
+  floor: number;
+  fairValue: number;
+  ceiling: number;
+  compsCount: number;
+  totalCompsObserved?: number;
+}
+
+export interface IAS38Accounting {
+  dVal: number;
+  aVal: number;
+  vsCalculated: number;
+  isFloorActive: boolean;
+  accountingStandard?: string;
+}
+
+export interface LatentClusterParams {
+  Sc: number;
+  beta: number;
+  Ac: number;
+  Sz: number;
+  CpBase: number;
+}
+
+export interface LatentCluster {
+  clusterId: string;
+  clusterName: string;
+  Sc: number;
+  beta: number;
+  Ac: number;
+  Sz: number;
+}
+
+export interface ShapValues {
+  base: number;
+  scarcity: number;
+  grade: number;
+  hype: number;
+  sentiment: number;
+  macro: number;
+  floorLift: number;
+  total: number;
+}
+
+export interface QualifiedComp extends MarketplaceComp {
+  normalizedPrice: number;
+  compMult: number;
+  isSuspicious: boolean;
+}
+
+export interface TrimmedComp extends QualifiedComp {
+  trimReason: string;
+}
+
+export interface ValuationOutput {
+  pricePoints: PricePoints;
+  ias38Accounting: IAS38Accounting;
+  latentCluster: LatentCluster;
+  shapValues: ShapValues;
+  qualifiedComps: QualifiedComp[];
+  trimmedComps: TrimmedComp[];
+  parametersUsed: {
+    Hz: number;
+    Sz: number;
+    M: number;
+    t: string;
+    scarcityFactor: string;
+  };
+}
+
+export interface GroundingSource {
+  title: string;
+  uri: string;
+}
+
+export interface ActiveSlabData extends CardMeta, ValuationOutput {
+  analysisText: string;
+  searchQueries: string[];
+  sources: GroundingSource[];
+  rawQuery: string;
+  timestamp: string;
+}
+
+export interface VaultCard {
+  id: string;
+  player: string;
+  year: number;
+  set: string;
+  cardNumber: string;
+  parallel: string;
+  serialNumber: string;
+  attributes: string;
+  gradeCompany: string;
+  gradeCondition: string;
+  grade: string;
+  certNumber: string;
+  pricePoints: PricePoints;
+  ias38Accounting: IAS38Accounting;
+  latentCluster?: LatentCluster | null;
+  shapValues?: ShapValues | null;
+  isWatchlist: boolean;
+  notes?: string;
+  sourceUrl?: string;
+  createdAt?: any;
 }
