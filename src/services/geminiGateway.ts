@@ -51,7 +51,7 @@ export async function cardIntelligenceGateway({
         body: JSON.stringify({ query, action })
       });
       if (gatewayRes.ok) {
-        const gatewayData = await gatewayRes.json();
+        const gatewayData: any = await gatewayRes.json();
         const valuation = executeMasterValuationFramework({
           cardMeta: gatewayData.cardMeta,
           rawComps: gatewayData.rawComps,
@@ -156,7 +156,7 @@ Output your qualitative summary, and AT THE VERY END include a single valid JSON
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result: any = await response.json();
         const candidate = result.candidates?.[0];
         const responseText = candidate?.content?.parts?.[0]?.text || "";
 
