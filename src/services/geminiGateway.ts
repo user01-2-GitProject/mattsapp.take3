@@ -36,6 +36,11 @@ export async function cardIntelligenceGateway({
     throw new Error("COMMAND REJECTED: Search fragment cannot be blank.");
   }
 
+  // SECURITY: Enforce maximum input query length to mitigate DoS and prompt bloating risks.
+  if (query.length > 500) {
+    throw new Error("COMMAND REJECTED: Search fragment exceeds maximum length limit of 500 characters.");
+  }
+
   // Route 1: Remote Gateway Proxy (Zero-Trust Endpoint)
   if (VITE_CONFIG.apiGatewayUrl) {
     try {
@@ -138,10 +143,15 @@ Output your qualitative summary, and AT THE VERY END include a single valid JSON
   ]
 }`;
 
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${activeKey}`;
+      // SECURITY: Transmit API key via 'x-goog-api-key' request header instead of URL query parameter
+      // to prevent credential exposure in HTTP request logs, browser histories, and proxy logs (CWE-598).
+      const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent";
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": activeKey
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           tools: [{ google_search: {} }]
