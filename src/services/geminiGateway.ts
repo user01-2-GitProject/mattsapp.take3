@@ -35,6 +35,9 @@ export async function cardIntelligenceGateway({
   if (!query || !query.trim()) {
     throw new Error("COMMAND REJECTED: Search fragment cannot be blank.");
   }
+  if (query.trim().length > 500) {
+    throw new Error("COMMAND REJECTED: Search fragment exceeds maximum length of 500 characters.");
+  }
 
   // Route 1: Remote Gateway Proxy (Zero-Trust Endpoint)
   if (VITE_CONFIG.apiGatewayUrl) {
@@ -48,7 +51,7 @@ export async function cardIntelligenceGateway({
         body: JSON.stringify({ query, action })
       });
       if (gatewayRes.ok) {
-        const gatewayData = await gatewayRes.json();
+        const gatewayData: any = await gatewayRes.json();
         const valuation = executeMasterValuationFramework({
           cardMeta: gatewayData.cardMeta,
           rawComps: gatewayData.rawComps,
@@ -138,10 +141,14 @@ Output your qualitative summary, and AT THE VERY END include a single valid JSON
   ]
 }`;
 
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${activeKey}`;
+      // SECURITY: Pass API key via x-goog-api-key header instead of URL parameter to avoid leaking keys in request URLs, proxy logs, and Referer headers.
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent`;
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": activeKey
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           tools: [{ google_search: {} }]
@@ -149,7 +156,7 @@ Output your qualitative summary, and AT THE VERY END include a single valid JSON
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result: any = await response.json();
         const candidate = result.candidates?.[0];
         const responseText = candidate?.content?.parts?.[0]?.text || "";
 
